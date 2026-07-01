@@ -51,15 +51,16 @@ public class ClientModListHandler {
                     .anyMatch(m -> m.equals(checkMod));
 
             if (isBlacklisted) {
-
-                if (logOnly) {
-                    System.out.println("[Server-Eye] Forbidden mod detected (logOnly=true): " + mod);
-                    return;
+                // Log to Console
+                System.out.println("[Server-Eye] Player " + username 
+                    + " has forbidden mod: " + mod);
+                
+                // Check if the Server is in log only mode
+                if (!logOnly) {
+                    player.connection.disconnect(
+                        Component.literal("You are using a disallowed modification.")
+                    );
                 }
-
-                player.connection.disconnect(
-                        Component.literal("Forbidden mod detected: " + mod)
-                );
                 return;
             }
         }
