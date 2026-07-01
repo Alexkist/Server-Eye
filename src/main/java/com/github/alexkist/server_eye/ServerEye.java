@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
 
-@Mod("server-eye")
+@Mod("server_eye")
 public class ServerEye {
 
     public ServerEye() {
