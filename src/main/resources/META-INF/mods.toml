@@ -27,7 +27,7 @@ version="0.1" #mandatory
 #credits="" #optional
 
 authors="Alexkist" #optional
-description='''A way for Server Owners to prevent certian Mods'''
+description='''Server-Side modlist verification'''
 
 # Display Test controls the display for your mod in the server connection screen
 # MATCH_VERSION means that your mod will cause a red X if the versions on client and server differ. This is the default behaviour and should be what you choose if you have server and client elements to your mod.
