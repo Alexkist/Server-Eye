@@ -1,9 +1,10 @@
 package com.github.alexkist.server_eye.config;
 
-import net.minecraftforge.common.ForgeConfigSpec;
+import java.util.List;
+
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.List;
+import net.minecraftforge.common.ForgeConfigSpec;
 
 public class ServerEyeConfig {
 

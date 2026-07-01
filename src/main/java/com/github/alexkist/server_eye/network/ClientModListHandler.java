@@ -1,14 +1,28 @@
 package com.github.alexkist.server_eye.network;
 
-import com.github.alexkist.server_eye.config.ServerEyeConfig;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.network.chat.Component;
-
 import java.util.List;
+import java.util.function.Supplier;
+
+import com.github.alexkist.server_eye.config.ServerEyeConfig;
+
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.network.NetworkEvent;
 
 public class ClientModListHandler {
 
-    public static void handle(ClientModListPayload payload, ServerPlayer player) {
+    public static void handle(ClientModListPayload payload, Supplier<NetworkEvent.Context> ctxSupplier) {
+        NetworkEvent.Context ctx = ctxSupplier.get();
+        ctx.enqueueWork(() -> {
+            ServerPlayer player = ctx.getSender();
+            if (player != null) {
+                process(payload, player);
+            }
+        });
+        ctx.setPacketHandled(true);
+    }
+
+    private static void process(ClientModListPayload payload, ServerPlayer player) {
 
         List<? extends String> blacklist = ServerEyeConfig.COMMON.blacklistedMods.get();
         List<? extends String> whitelist = ServerEyeConfig.COMMON.whitelistedPlayers.get();
