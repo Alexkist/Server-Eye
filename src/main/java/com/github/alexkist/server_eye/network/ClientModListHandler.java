@@ -1,5 +1,6 @@
 package com.github.alexkist.server_eye.network;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -42,6 +43,7 @@ public class ClientModListHandler {
         }
 
         // --- Blacklist check ---
+        List<String> forbiddenMods = new ArrayList<>();
         for (String mod : payload.mods()) {
 
             String checkMod = caseSensitive ? mod : mod.toLowerCase();
@@ -51,17 +53,21 @@ public class ClientModListHandler {
                     .anyMatch(m -> m.equals(checkMod));
 
             if (isBlacklisted) {
-                // Log to Console
-                System.out.println("[Server-Eye] Player " + username 
-                    + " has forbidden mod: " + mod);
-                
-                // Check if the Server is in log only mode
-                if (!logOnly) {
-                    player.connection.disconnect(
-                        Component.literal("You are using a disallowed modification.")
-                    );
-                }
-                return;
+                forbiddenMods.add(mod);
+            }
+        }
+
+        if (!forbiddenMods.isEmpty()) {
+            // Log to Console
+            System.out.println("[Server-Eye] Player " + username
+                + " has forbidden mod(s): " + String.join(", ", forbiddenMods));
+
+            // Check if the Server is in log only mode
+            if (!logOnly) {
+                player.connection.disconnect(
+                    Component.literal("You are using disallowed modification(s):\n"
+                        + String.join("\n", forbiddenMods))
+                );
             }
         }
     }
