@@ -26,7 +26,7 @@ public class ServerEyeConfig {
 
         public Common(ForgeConfigSpec.Builder builder) {
 
-            builder.push("server-eye");
+            builder.push("server_eye");
 
             blacklistedMods = builder
                     .comment("Mods that will cause a player to be kicked.")
