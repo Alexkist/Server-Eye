@@ -38,7 +38,7 @@ public class ClientModListHandler {
                 .anyMatch(entry -> entry.equalsIgnoreCase(username));
 
         if (isWhitelisted) {
-            System.out.println("[Server-Eye] Player " + username + " is whitelisted.");
+            System.out.println("[Server-Eye] " + username + " is whitelisted.");
             return;
         }
 
@@ -59,7 +59,7 @@ public class ClientModListHandler {
 
         if (!forbiddenMods.isEmpty()) {
             // Log to Console
-            System.out.println("[Server-Eye] Player " + username
+            System.out.println("[Server-Eye] " + username
                 + " has forbidden mod(s): " + String.join(", ", forbiddenMods));
 
             // Check if the Server is in log only mode

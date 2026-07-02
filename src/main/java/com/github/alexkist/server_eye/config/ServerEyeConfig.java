@@ -29,23 +29,23 @@ public class ServerEyeConfig {
             builder.push("server_eye");
 
             blacklistedMods = builder
-                    .comment("Mods that will cause a player to be kicked.")
+                    .comment("Add modIds here to blacklist them. Players with these mods will be kicked.")
                     .defineList("blacklistedMods",
-                            List.of("xraymod", "cheatengine", "baritone"),
+                            List.of(),
                             o -> o instanceof String);
 
             whitelistedPlayers = builder
-                    .comment("Players who are allowed even if they have forbidden mods.")
+                    .comment("Add player names here to whitelist them. Whitelisted players will not be kicked, even if they have blacklisted mods.")
                     .defineList("whitelistedPlayers",
-                            List.of("Alexkist", "AdminUser"),
+                            List.of(),
                             o -> o instanceof String);
 
             logOnly = builder
-                    .comment("If true, players will NOT be kicked. Only logged.")
+                    .comment("If enabled, Players with blacklisted mods will not be kicked, and it will only be logged.")
                     .define("logOnly", false);
 
             caseSensitive = builder
-                    .comment("If true, mod name matching becomes case-sensitive.")
+                    .comment("If enabled, Server Eye will also check for Captialization of modIds. However, this is basically useless as modIds are lowercase.")
                     .define("caseSensitive", false);
 
             builder.pop();
