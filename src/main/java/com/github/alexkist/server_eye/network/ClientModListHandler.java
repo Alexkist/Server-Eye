@@ -3,6 +3,8 @@ package com.github.alexkist.server_eye.network;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.github.alexkist.server_eye.config.ServerEyeConfig;
 
@@ -28,7 +30,6 @@ public class ClientModListHandler {
         List<? extends String> blacklist = ServerEyeConfig.COMMON.blacklistedMods.get();
         List<? extends String> whitelist = ServerEyeConfig.COMMON.whitelistedPlayers.get();
 
-        boolean caseSensitive = ServerEyeConfig.COMMON.caseSensitive.get();
         boolean logOnly = ServerEyeConfig.COMMON.logOnly.get();
 
         // --- Whitelist check (username only) ---
@@ -43,16 +44,13 @@ public class ClientModListHandler {
         }
 
         // --- Blacklist check ---
+        Set<String> normalizedBlacklist = blacklist.stream()
+                .map(String::toLowerCase)
+                .collect(Collectors.toSet());
+
         List<String> forbiddenMods = new ArrayList<>();
         for (String mod : payload.mods()) {
-
-            String checkMod = caseSensitive ? mod : mod.toLowerCase();
-
-            boolean isBlacklisted = blacklist.stream()
-                    .map(m -> caseSensitive ? m : m.toLowerCase())
-                    .anyMatch(m -> m.equals(checkMod));
-
-            if (isBlacklisted) {
+            if (normalizedBlacklist.contains(mod.toLowerCase())) {
                 forbiddenMods.add(mod);
             }
         }

@@ -22,7 +22,6 @@ public class ServerEyeConfig {
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> blacklistedMods;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> whitelistedPlayers;
         public final ForgeConfigSpec.BooleanValue logOnly;
-        public final ForgeConfigSpec.BooleanValue caseSensitive;
 
         public Common(ForgeConfigSpec.Builder builder) {
 
@@ -43,10 +42,6 @@ public class ServerEyeConfig {
             logOnly = builder
                     .comment("If enabled, Players with blacklisted mods will not be kicked, and it will only be logged.")
                     .define("logOnly", false);
-
-            caseSensitive = builder
-                    .comment("If enabled, Server Eye will also check for Captialization of modIds. However, this is basically useless as modIds are lowercase.")
-                    .define("caseSensitive", false);
 
             builder.pop();
         }
