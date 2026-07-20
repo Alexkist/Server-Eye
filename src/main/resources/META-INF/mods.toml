@@ -8,7 +8,7 @@
 # Essentials
 modLoader="javafml" #mandatory
 loaderVersion="${loader_version_range}" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
-license="${mod_license}"
+license="AGPL-3.0-only"
 issueTrackerURL="https://github.com/Alexkist/Server-Eye/issues" #optional
 
 # If your mod is purely client-side and has no multiplayer functionality (be it dedicated servers or Open to LAN),
