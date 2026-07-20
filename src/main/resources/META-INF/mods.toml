@@ -23,7 +23,7 @@ displayName="${mod_name}" #mandatory
 version="${mod_version}" #mandatory
 
 #displayURL="https://modrinth.com/mod/server-eye" #optional
-#logoFile="https://cdn.modrinth.com/data/91fQPe5S/60359d7da9162a9194c0c9d4a71d435e970eedc3_96.webp" #optional
+#logoFile="icon.png" #optional
 #credits="" #optional
 
 authors="${mod_authors}" #optional
