@@ -2,8 +2,8 @@ package com.github.alexkist.server_eye.network;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 import java.util.Set;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import com.github.alexkist.server_eye.config.ServerEyeConfig;
@@ -63,7 +63,7 @@ public class ClientModListHandler {
             // Check if the Server is in log only mode
             if (!logOnly) {
                 player.connection.disconnect(
-                    Component.literal("You are using disallowed modification(s):\n"
+                    Component.literal("Server Eye\nYou are using disallowed modification(s):\n\n"
                         + String.join("\n", forbiddenMods))
                 );
             }
