@@ -40,7 +40,7 @@ public class ServerEyeConfig {
                             o -> o instanceof String);
 
             logOnly = builder
-                    .comment("If enabled, Players with blacklisted mods will not be kicked, and it will only be logged.")
+                    .comment("If enabled, Players with blacklisted mods will not be kicked, and it will only be logged to the Console.")
                     .define("logOnly", false);
 
             builder.pop();
