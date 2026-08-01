@@ -12,7 +12,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = "server_eye")
 public class ModListTimeoutHandler {
 
     // Players who have joined but not yet sent their mod list, mapped to ticks waited so far
@@ -41,6 +41,11 @@ public class ModListTimeoutHandler {
     public static void onServerTick(TickEvent.ServerTickEvent event) {
         if (event.phase != TickEvent.Phase.END || pending.isEmpty()) {
             return;
+        }
+
+        int timeoutSeconds = ServerEyeConfig.COMMON.timeoutSeconds.get();
+        if (timeoutSeconds <= 0) {
+            return; // disabled
         }
 
         int timeoutTicks = ServerEyeConfig.COMMON.timeoutSeconds.get() * 20;
