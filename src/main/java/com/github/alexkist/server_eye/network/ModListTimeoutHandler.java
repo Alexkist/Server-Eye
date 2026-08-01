@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = "server_eye")
 public class ModListTimeoutHandler {
 
-    // Players who have joined but not yet sent their mod list, mapped to ticks waited so far
+    // Players who have joined but not yet sent their mod list
     private static final Map<ServerPlayer, Integer> pending = new ConcurrentHashMap<>();
 
     /** Called by ClientModListHandler once a player's payload has been processed. */
@@ -43,17 +43,20 @@ public class ModListTimeoutHandler {
             return;
         }
 
+        // Check if timeout was Disabled
         int timeoutSeconds = ServerEyeConfig.COMMON.timeoutSeconds.get();
         if (timeoutSeconds <= 0) {
-            return; // disabled
+            return; // Since it is set to 0, it would cause issues so we will return the Request :)
         }
 
-        int timeoutTicks = ServerEyeConfig.COMMON.timeoutSeconds.get() * 20;
+        int timeoutTicks = timeoutSeconds * 20;
 
+        // Add Entry
         pending.entrySet().removeIf(entry -> {
             ServerPlayer player = entry.getKey();
             int ticksWaited = entry.getValue() + 1;
 
+            // Check if Player timed
             if (ticksWaited >= timeoutTicks) {
                 player.connection.disconnect(
                     Component.literal("Server Eye\nFailed to receive mod list (Timed out)\n"
