@@ -17,16 +17,20 @@ public class ModListTimeoutHandler {
 
     // Players who have joined but not yet sent their mod list
     private static final Map<ServerPlayer, Integer> pending = new ConcurrentHashMap<>();
+    private static final Set<ServerPlayer> confirmed = ConcurrentHashMap.newKeySet();
 
     /** Called by ClientModListHandler once a player's payload has been processed. */
     public static void markReceived(ServerPlayer player) {
+        confirmed.add(player);
         pending.remove(player);
     }
 
     @SubscribeEvent
     public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
-            pending.put(player, 0);
+            if (!confirmed.remove(player)) {
+                pending.put(player, 0);
+            }
         }
     }
 
@@ -34,6 +38,7 @@ public class ModListTimeoutHandler {
     public static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
             pending.remove(player);
+            confirmed.remove(player);
         }
     }
 
@@ -56,7 +61,7 @@ public class ModListTimeoutHandler {
             ServerPlayer player = entry.getKey();
             int ticksWaited = entry.getValue() + 1;
 
-            // Check if Player timed
+            // Check if Player timed out
             if (ticksWaited >= timeoutTicks) {
                 player.connection.disconnect(
                     Component.literal("Server Eye\nFailed to receive mod list (Timed out)\n"
