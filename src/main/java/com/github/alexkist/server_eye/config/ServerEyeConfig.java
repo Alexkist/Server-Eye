@@ -21,6 +21,7 @@ public class ServerEyeConfig {
 
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> blacklistedMods;
         public final ForgeConfigSpec.ConfigValue<List<? extends String>> whitelistedPlayers;
+        public final ForgeConfigSpec.IntValue timeoutSeconds;
         public final ForgeConfigSpec.BooleanValue logOnly;
 
         public Common(ForgeConfigSpec.Builder builder) {
@@ -38,6 +39,10 @@ public class ServerEyeConfig {
                     .defineList("whitelistedPlayers",
                             List.of(),
                             o -> o instanceof String);
+
+            timeoutSeconds = builder
+                    .comment("How many seconds to wait for a player's mod list before kicking them. Set to 0 to disable this check.")
+                    .defineInRange("timeoutSeconds", 10, 0, 300);
 
             logOnly = builder
                     .comment("If enabled, Players with blacklisted mods will not be kicked, and it will only be logged to the Console.")

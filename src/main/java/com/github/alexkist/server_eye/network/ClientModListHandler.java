@@ -27,6 +27,9 @@ public class ClientModListHandler {
 
     private static void process(ClientModListPayload payload, ServerPlayer player) {
 
+        // --- Timeout check ---
+        ModListTimeoutHandler.markReceived(player);
+
         List<? extends String> blacklist = ServerEyeConfig.COMMON.blacklistedMods.get();
         List<? extends String> whitelist = ServerEyeConfig.COMMON.whitelistedPlayers.get();
 
