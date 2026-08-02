@@ -57,10 +57,8 @@ public class ModListTimeoutHandler {
 
         int timeoutTicks = timeoutSeconds * 20;
 
-        // Add Entry
-        pending.entrySet().removeIf(entry -> {
-            ServerPlayer player = entry.getKey();
-            int ticksWaited = entry.getValue() + 1;
+        pending.forEach((player, ticks) -> {
+            int ticksWaited = ticks + 1;
 
             // Check if Player timed out
             if (ticksWaited >= timeoutTicks) {
@@ -68,11 +66,10 @@ public class ModListTimeoutHandler {
                     Component.literal("Server Eye\nFailed to receive mod list (Timed out)\n"
                         + "This can happen due to a slow connection, or if a required mod is missing.")
                 );
-                return true;
+                pending.remove(player);
+            } else {
+                pending.put(player, ticksWaited);
             }
-
-            entry.setValue(ticksWaited);
-            return false;
         });
     }
 }
