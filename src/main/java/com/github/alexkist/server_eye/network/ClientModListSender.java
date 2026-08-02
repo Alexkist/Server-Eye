@@ -6,11 +6,11 @@ import java.util.stream.Collectors;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
-@Mod.EventBusSubscriber(modid = "server_eye", value = Dist.CLIENT)
+@EventBusSubscriber(modid = "server_eye", value = Dist.CLIENT)
 public class ClientModListSender {
 
     @SubscribeEvent

@@ -9,11 +9,11 @@ import com.github.alexkist.server_eye.config.ServerEyeConfig;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
-@Mod.EventBusSubscriber(modid = "server_eye")
+@EventBusSubscriber(modid = "server_eye")
 public class ModListTimeoutHandler {
 
     private static final Map<ServerPlayer, Integer> pending = new ConcurrentHashMap<>();
