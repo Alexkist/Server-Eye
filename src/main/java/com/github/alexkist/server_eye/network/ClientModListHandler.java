@@ -11,7 +11,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
-public class ClientModListHanlder {
+public class ClientModListHandler {
 
     public static void handle(ClientModListPayload payload, IPayloadContext context) {
         context.enqueueWork(() -> {

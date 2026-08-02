@@ -21,10 +21,10 @@ public class ServerEyeConfig {
 
     public static class Common {
         
-        public static final ModConfigSpec.ConfigValue<List<? extends String>> blacklistedMods;
-        public static final ModConfigSpec.ConfigValue<List<? extends String>> whitelistedPlayers;
-        public static final ModConfigSpec.IntValue timeoutSeconds;
-        public static final ModConfigSpec.BooleanValue logOnly;
+        public final ModConfigSpec.ConfigValue<List<? extends String>> blacklistedMods;
+        public final ModConfigSpec.ConfigValue<List<? extends String>> whitelistedPlayers;
+        public final ModConfigSpec.IntValue timeoutSeconds;
+        public final ModConfigSpec.BooleanValue logOnly;
 
         public Common(ModConfigSpec.Builder builder) {
 
