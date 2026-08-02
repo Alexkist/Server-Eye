@@ -1,0 +1,7 @@
+{
+    "pack": {
+        "description": "server_eye resources",
+        "pack_format": 15,
+        "_comment": "Basic Resources that Server Eye requires"
+    }
+}

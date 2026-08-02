@@ -13,8 +13,8 @@ displayName="${mod_name}"
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/"
 logoFile="icon.jpg"
 
-#credits="Alexkist, Febreeze, Zaid"
-#authors="Alexkist, Febreeze"
+credits="Alexkist, Febreeze, Zaid"
+authors="Alexkist, Febreeze"
 description='''
 Server-Side modlist verification
 '''
