@@ -1,0 +1,17 @@
+package com.github.alexkist.server_eye.network;
+
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neofogred.neoforge.network.registration.PayloadRegistrar;
+
+public class ModNetworking {
+
+    public static void register(final RegisterPayloadHandlersEvent event) {
+        final PayloadRegistrar = event.registrar("1");
+
+        registrar.playToServer(
+            ClientModListPayload.TYPE,
+            ClientModListPayload.STREAM_CODEC,
+            ClientModListHandler::handle
+        );
+    }
+}
