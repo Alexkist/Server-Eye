@@ -57,7 +57,7 @@ public class ClientModListHandler {
 
             if (!logOnly) {
                 player.connection.disconnect(
-                    Component.literal("You are using disallowed modification(s):\n"
+                    Component.literal("Server Eye\nYou are using disallowed modification(s):\n\n"
                         + String.join("\n", forbiddenMods))
                 );
             }

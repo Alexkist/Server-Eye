@@ -34,6 +34,14 @@ public class ModListTimeoutHandler {
     }
 
     @SubscribeEvent
+    public static void onPlayerLoggedOut(PlayerEvent.PlayerLoggedOutEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) {
+            pending.remove(player);
+            confirmed.remove(player);
+        }
+    }
+
+    @SubscribeEvent
     public static void onServerTick(ServerTickEvent.Post event) {
         if (pending.isEmpty()) {
             return;
@@ -41,6 +49,7 @@ public class ModListTimeoutHandler {
 
         int timeoutSeconds = ServerEyeConfig.COMMON.timeoutSeconds.get();
         if (timeoutSeconds <= 0) {
+            pending.clear();
             return;
         }
 
@@ -50,6 +59,11 @@ public class ModListTimeoutHandler {
             int ticksWaited = ticks + 1;
 
             if (ticksWaited >= timeoutTicks) {
+                // Log
+                System.out.println("[Server-Eye] " + player.getGameProfile().getName()
+                    + " was kicked for failing to send there modlist in time.");
+
+                // Disconnect
                 player.connection.disconnect(
                     Component.literal("Server Eye\nFailed to receive mod list (Timed out)\n"
                         + "This can happen due to a slow connection, or if a required mod is missing.")
