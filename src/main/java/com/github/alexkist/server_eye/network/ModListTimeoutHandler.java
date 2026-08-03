@@ -52,6 +52,7 @@ public class ModListTimeoutHandler {
         // Check if timeout was Disabled
         int timeoutSeconds = ServerEyeConfig.COMMON.timeoutSeconds.get();
         if (timeoutSeconds <= 0) {
+            pending.clear();
             return; // Since it is set to 0, it would cause issues so we will return the Request :)
         }
 
