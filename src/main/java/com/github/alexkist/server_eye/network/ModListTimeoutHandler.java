@@ -61,12 +61,14 @@ public class ModListTimeoutHandler {
             if (ticksWaited >= timeoutTicks) {
                 // Log
                 System.out.println("[Server-Eye] " + player.getGameProfile().getName()
-                    + " was kicked for failing to send there modlist in time.");
+                    + " was kicked for failing to send their mod list in time.");
 
                 // Disconnect
                 player.connection.disconnect(
-                    Component.literal("Server Eye\nFailed to receive mod list (Timed out)\n"
-                        + "This can happen due to a slow connection, or if a required mod is missing.")
+                    Component.literal("""
+                        Server Eye
+                        Failed to receive mod list (Timed out)
+                        This can happen due to a slow connection, or because Server Eye is not installed.""")
                 );
                 pending.remove(player);
             } else {
