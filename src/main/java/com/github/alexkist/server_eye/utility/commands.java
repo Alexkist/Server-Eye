@@ -3,6 +3,8 @@ package com.github.alexkist.server_eye.utility;
 import java.util.List;
 
 import com.github.alexkist.server_eye.network.PlayerModListStore;
+import com.github.alexkist.server_eye.config.ConfigManager;
+
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -26,6 +28,8 @@ public class commands {
         dispatcher.register(
             Commands.literal("server_eye")
                 .requires(source -> source.hasPermission(4))
+                .then(Commands.literal("reload")
+                    .executes(commands::reloadConfig))
                 .then(Commands.literal("ListMods")
                     .then(Commands.argument("player", EntityArgument.player())
                         .executes(commands::listMods)))
@@ -51,5 +55,30 @@ public class commands {
         ), false);
 
         return mods.size();
+    }
+
+    private static int reloadConfig(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+        CommandSourceStack source = context.getSource();
+
+        boolean success = ConfigManager.reload();
+
+        if (!success) {
+            source.sendFailure(Component.literal("Failed to reload Config."));
+            return 0;
+        }
+
+        // source.sendSuccess(() -> Component.literal("Config reloaded!"), true); -- Not sure if I will use this...
+        System.out.println("[Server Eye] Config reloaded");
+
+        // --- Kick Players --
+        // This is just a safety precaution :)
+        for (ServerPlayer player : context.getSource().getServer().getPlayerList().getPlayers()) {
+            player.connection.disconnect(Component.literal("""
+                Server Eye
+                Config has been reloaded, please rejoin!"""
+            ));
+        }
+
+        return 1;
     }
 }
