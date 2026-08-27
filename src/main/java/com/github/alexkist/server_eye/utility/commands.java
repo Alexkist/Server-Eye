@@ -40,7 +40,7 @@ public class commands {
 
         if (mods == null) {
             source.sendFailure(Component.literal(
-                target.getGameProfile().getName() + " has not sent a mod list yet."
+                target.getGameProfile().getName() + " has not yet sent there mod list to the Server"
             ));
             return 0;
         }
