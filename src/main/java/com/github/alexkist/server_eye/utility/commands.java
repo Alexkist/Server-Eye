@@ -24,7 +24,7 @@ public class commands {
         CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
 
         dispatcher.register(
-            Commands.literal("servereye")
+            Commands.literal("server_eye")
                 .requires(source -> source.hasPermission(4))
                 .then(Commands.literal("ListMods")
                     .then(Commands.argument("player", EntityArgument.player())
