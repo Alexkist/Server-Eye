@@ -2,9 +2,8 @@ package com.github.alexkist.server_eye.utility;
 
 import java.util.List;
 
-import com.github.alexkist.server_eye.network.PlayerModListStore;
 import com.github.alexkist.server_eye.config.ConfigManager;
-
+import com.github.alexkist.server_eye.network.PlayerModListStore;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -30,7 +29,7 @@ public class commands {
                 .requires(source -> source.hasPermission(4))
                 .then(Commands.literal("reload")
                     .executes(commands::reloadConfig))
-                .then(Commands.literal("ListMods")
+                .then(Commands.literal("viewMods")
                     .then(Commands.argument("player", EntityArgument.player())
                         .executes(commands::listMods)))
         );
@@ -67,17 +66,18 @@ public class commands {
             return 0;
         }
 
-        // source.sendSuccess(() -> Component.literal("Config reloaded!"), true); -- Not sure if I will use this...
-        System.out.println("[Server Eye] Config reloaded");
+        source.sendSuccess(() -> Component.literal("Config reloaded!"), true);
 
         // --- Kick Players --
         // This is just a safety precaution :)
-        for (ServerPlayer player : context.getSource().getServer().getPlayerList().getPlayers()) {
-            player.connection.disconnect(Component.literal("""
-                Server Eye
-                Config has been reloaded, please rejoin!"""
-            ));
-        }
+        // Leaving this out for now as I think it messes with the Server a little
+        //for (ServerPlayer player : context.getSource().getServer().getPlayerList().getPlayers()) {
+        //    player.connection.disconnect(Component.literal("""
+        //        Server Eye
+        //        Config has been reloaded, please rejoin!"""
+        //    ));
+        //}
+        System.out.println("[Server Eye] Config reloaded");
 
         return 1;
     }

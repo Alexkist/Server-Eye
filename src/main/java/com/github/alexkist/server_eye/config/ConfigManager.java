@@ -1,29 +1,47 @@
 package com.github.alexkist.server_eye.config;
 
+import java.util.Set;
+
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.config.ConfigTracker;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
 
-@Mod.EventBusSubscriber(modid = "server_eye", bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ConfigManager {
 
-    private static ModConfig commonConfig;
+    public static void load() {
+        ModLoadingContext.get().registerConfig(
+            ModConfig.Type.COMMON,
+            ServerEyeConfig.COMMON_SPEC
+        );
+    }
 
-    @SubscribeEvent
-    public static void onLoad(ModConfigEvent.Loading event) {
-        if (event.getConfig().getSpec() == ServerEyeConfig.COMMON_SPEC) {
-            commonConfig = event.getConfig();
+    private static ModConfig findCommonConfig() {
+        Set<ModConfig> commonConfigs = ConfigTracker.INSTANCE.configSets().get(ModConfig.Type.COMMON);
+
+        if (commonConfigs == null) {
+            return null;
         }
+
+        for (ModConfig config : commonConfigs) {
+            if (config.getSpec() == ServerEyeConfig.COMMON_SPEC) {
+                return config;
+            }
+        }
+
+        return null;
     }
 
     public static boolean reload() {
-        if (commonConfig == null) {
+        ModConfig config = findCommonConfig();
+
+        if (config == null) {
             return false;
         }
-        ((CommentedFileConfig) commonConfig.getConfigData()).load();
+
+        ((CommentedFileConfig) config.getConfigData()).load();
+        ServerEyeConfig.COMMON_SPEC.afterReload();
         return true;
     }
 }
