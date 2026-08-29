@@ -48,9 +48,9 @@ body:
     attributes:
       label: Environment
       options:
+        - Client and Server
         - Client
         - Server
-        - Client and Server
         - Uncertain
     validations:
       required: true
