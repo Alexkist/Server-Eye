@@ -12,13 +12,35 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.server.permission.PermissionAPI;
+import net.minecraftforge.server.permission.events.PermissionGatherEvent;
+import net.minecraftforge.server.permission.nodes.PermissionNode;
+import net.minecraftforge.server.permission.nodes.PermissionTypes;
 
 @Mod.EventBusSubscriber(modid = "server_eye")
 public class commands {
+
+    public static final PermissionNode<Boolean> RELOAD = new PermissionNode<>(
+        new ResourceLocation("server_eye", "reload"),
+        PermissionTypes.BOOLEAN,
+        (player, playerUUID, context) -> player != null && player.hasPermissions(4)
+    );
+
+    public static final PermissionNode<Boolean> MODS = new PermissionNode<>(
+        new ResourceLocation("server_eye", "mods"),
+        PermissionTypes.BOOLEAN,
+        (player, playerUUID, context) -> player != null && player.hasPermissions(4)
+    );
+
+    @SubscribeEvent
+    public static void onGatherNodes(PermissionGatherEvent.Nodes event) {
+        event.addNodes(RELOAD, MODS);
+    }
 
     @SubscribeEvent
     public static void onRegisterCommands(RegisterCommandsEvent event) {
@@ -26,13 +48,22 @@ public class commands {
 
         dispatcher.register(
             Commands.literal("server_eye")
-                .requires(source -> source.hasPermission(4))
+                .requires(source -> hasPermission(source, RELOAD) || hasPermission(source, MODS))
                 .then(Commands.literal("reload")
+                    .requires(source -> hasPermission(source, RELOAD))
                     .executes(commands::reloadConfig))
                 .then(Commands.literal("viewMods")
+                    .requires(source -> hasPermission(source, MODS))
                     .then(Commands.argument("player", EntityArgument.player())
                         .executes(commands::listMods)))
         );
+    }
+
+    private static boolean hasPermission(CommandSourceStack source, PermissionNode<Boolean> node) {
+        if (source.getEntity() instanceof ServerPlayer player) {
+            return PermissionAPI.getPermission(player, node);
+        }
+        return source.hasPermission(2); // Leaving this so you can still use Commands over the Console. Might add it to the Config.
     }
 
     private static int listMods(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
