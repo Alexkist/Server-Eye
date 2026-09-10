@@ -11,13 +11,29 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.server.permission.PermissionAPI;
+import net.neoforged.neoforge.server.permission.events.PermissionGatherEvent;
+import net.neoforged.neoforge.server.permission.nodes.PermissionNode;
+import net.neoforged.neoforge.server.permission.nodes.PermissionTypes;
 
 @EventBusSubscriber(modid = "server_eye")
 public class commands {
+
+    public static final PermissionNode<Boolean> MODS = new PermissionNode<>(
+        ResourceLocation.fromNamespaceAndPath("server_eye", "mods"),
+        PermissionTypes.BOOLEAN,
+        (player, playerUUID, context) -> player != null && player.hasPermissions(4)
+    );
+
+    @SubscribeEvent
+    public static void onGatherNodes(PermissionGatherEvent.Nodes event) {
+        event.addNodes(MODS);
+    }
 
     @SubscribeEvent
     public static void onRegisterCommands(RegisterCommandsEvent event) {
@@ -25,11 +41,18 @@ public class commands {
 
         dispatcher.register(
             Commands.literal("server_eye")
-                .requires(source -> source.hasPermission(4))
+                .requires(source -> hasPermission(source, MODS))
                 .then(Commands.literal("viewMods")
                     .then(Commands.argument("player", EntityArgument.player())
                         .executes(commands::listMods)))
         );
+    }
+
+    private static boolean hasPermission(CommandSourceStack source, PermissionNode<Boolean> node) {
+        if (source.getEntity() instanceof ServerPlayer player) {
+            return PermissionAPI.getPermission(player, node);
+        }
+        return source.hasPermission(2); // Leaving this so you can still use Commands over the Console. Might add it to the Config.
     }
 
     private static int listMods(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
