@@ -41,7 +41,7 @@ public class commands {
 
         dispatcher.register(
             Commands.literal("server_eye")
-                .requires(source -> hasPermission(source, MODS))
+                .requires(source -> hasPermission(source, MODS)) // Leaving this like this for now, until I find a better solution
                 .then(Commands.literal("viewMods")
                     .then(Commands.argument("player", EntityArgument.player())
                         .executes(commands::listMods)))
