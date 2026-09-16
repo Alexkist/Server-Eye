@@ -60,6 +60,7 @@ body:
     attributes:
       label: Server Eye Version
       options:
+        - v1.5
         - v1.4
         - v1.3
         - v1.2
