@@ -29,3 +29,10 @@ logoFile="icon.jpg"
     versionRange="${minecraft_version_range}"
     ordering="NONE"
     side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="luckperms"
+    mandatory=false
+    versionRange=[5.4.88,)
+    ordering=NONE
+    side="SERVER"
