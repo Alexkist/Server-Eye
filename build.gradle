@@ -2,6 +2,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'net.neoforged.moddev' version '2.0.143'
+    id "com.modrinth.minotaur" version "2.+"
     id 'idea'
 }
 
@@ -104,6 +105,19 @@ neoForge {
         "${mod_id}" {
             sourceSet(sourceSets.main)
         }
+    }
+}
+
+modrinth {
+    token = System.getenv("MODRINTH_TOKEN")
+    projectId = "server_eye"
+    versionNumber = "1.0"
+    versionType = "release"
+    uploadFile = jar
+    gameVersions = ["1.21.1"]
+    loaders = ["neoforge"]
+    dependencies {
+        optional.version "luckperms", "v5.4.150-neoforge"
     }
 }
 

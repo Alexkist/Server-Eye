@@ -45,3 +45,10 @@ Server-Side modlist verification
     versionRange="${minecraft_version_range}"
     ordering="NONE"
     side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="luckperms"
+    type="optional"
+    versionRange="[5.4.150,)"
+    ordering="NONE"
+    side="SERVER"
