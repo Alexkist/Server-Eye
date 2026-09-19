@@ -108,6 +108,7 @@ neoForge {
     }
 }
 
+// Minotaur
 modrinth {
     token = System.getenv("MODRINTH_TOKEN")
     projectId = "server_eye"
