@@ -29,6 +29,8 @@
     "custom": {
         "modmenu": {
             "links": {
+                "modmenu.modrinth": "https://modrinth.com/mod/server_eye",
+                "modmenu.github_releases": "https://github.com/Alexkist/Server-Eye/releases",
                 "modmenu.wiki": "https://github.com/Alexkist/Server-Eye/wiki"
             }
         }

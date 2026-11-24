@@ -1,15 +1,16 @@
 package com.github.alexkist.server_eye.server;
 
-import com.github.alexkist.server_eye.Constants;
-import com.github.alexkist.server_eye.config.ServerEyeConfig;
-import com.github.alexkist.server_eye.network.ClientModListPayload;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import com.github.alexkist.server_eye.Constants;
+import com.github.alexkist.server_eye.config.ServerEyeConfig;
+import com.github.alexkist.server_eye.network.ClientModListPayload;
+
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 
 public final class ModListVerifier {
 
@@ -23,7 +24,7 @@ public final class ModListVerifier {
         boolean isWhitelisted = config.whitelistedPlayers.stream()
                 .anyMatch(entry -> entry.equalsIgnoreCase(username));
         if (isWhitelisted) {
-            Constants.LOG.info("{} is whitelisted.", username);
+            Constants.LOG.info("{} is whitelisted, and has skipped mod checks.", username);
             return;
         }
 
@@ -42,12 +43,13 @@ public final class ModListVerifier {
             return;
         }
 
-        Constants.LOG.info("{} has forbidden mod(s): {}", username, String.join(", ", forbiddenMods));
+        Constants.LOG.info("{} has blacklisted mod(s): {}", username, String.join(", ", forbiddenMods));
 
         if (!config.logOnly) {
             player.connection.disconnect(Component.literal("""
                     Server Eye
-                    You are using disallowed modification(s):
+                    One or more of your installed mods are are not allowed on the Server.
+                    Please remove all mods listed below to join:
                     %s""".formatted(String.join("\n", forbiddenMods))));
         }
     }

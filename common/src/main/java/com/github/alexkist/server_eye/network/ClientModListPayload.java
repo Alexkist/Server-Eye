@@ -1,17 +1,15 @@
 package com.github.alexkist.server_eye.network;
 
+import java.util.List;
+
 import com.github.alexkist.server_eye.Constants;
+
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
-import java.util.List;
-
-/**
- * Client -> server: the client's mod ids.
- * Pure vanilla classes, so it lives in common. Each loader only registers it.
- */
+// Sends the Client's Modlist to the Server, gets registered by the Loaders.
 public record ClientModListPayload(List<String> mods) implements CustomPacketPayload {
 
     public static final Type<ClientModListPayload> TYPE = new Type<>(Constants.id("mod_list"));
