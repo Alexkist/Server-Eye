@@ -33,7 +33,6 @@ public class FabricPlatformHelper implements IPlatformHelper {
 
     @Override
     public List<String> getLoadedModIds() {
-        // Note: unlike NeoForge this includes every Fabric API module and jar-in-jar library
         return FabricLoader.getInstance().getAllMods().stream()
                 .map(mod -> mod.getMetadata().getId())
                 .toList();
@@ -41,7 +40,7 @@ public class FabricPlatformHelper implements IPlatformHelper {
 
     @Override
     public boolean canUseServerEyeCommand(CommandSourceStack source) {
-        // For LuckPerms on Fabric, add me.lucko:fabric-permissions-api and use:
+        // For LuckPerms on Fabric
         return Permissions.check(source, "server_eye.mods", source.getEntity() == null ? 2 : 4);
         // return source.hasPermission(source.getEntity() == null ? 2 : 4);
     }
