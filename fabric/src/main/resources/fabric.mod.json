@@ -5,7 +5,7 @@
     "name": "${mod_name}",
     "description": "${description}",
     "authors": ["Alexkist", "Febreeze"],
-    "contributors": ["Zaid"],
+    "contributors": ["Z4ID-LABS"],
     "contact": {
         "sources": "https://github.com/Alexkist/Server-Eye",
         "issues": "https://github.com/Alexkist/Server-Eye/issues"
@@ -25,5 +25,12 @@
     },
     "suggests": {
         "luckperms": "*"
+    },
+    "custom": {
+        "modmenu": {
+            "links": {
+                "modmenu.wiki": "https://github.com/Alexkist/Server-Eye/wiki"
+            }
+        }
     }
 }

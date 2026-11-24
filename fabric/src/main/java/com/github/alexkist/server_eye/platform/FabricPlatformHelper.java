@@ -1,11 +1,13 @@
 package com.github.alexkist.server_eye.platform;
 
-import com.github.alexkist.server_eye.platform.services.IPlatformHelper;
-import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.commands.CommandSourceStack;
-
 import java.nio.file.Path;
 import java.util.List;
+
+import com.github.alexkist.server_eye.platform.services.IPlatformHelper;
+
+import me.lucko.fabric.api.permissions.v0.Permissions;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.commands.CommandSourceStack;
 
 public class FabricPlatformHelper implements IPlatformHelper {
 
@@ -40,7 +42,7 @@ public class FabricPlatformHelper implements IPlatformHelper {
     @Override
     public boolean canUseServerEyeCommand(CommandSourceStack source) {
         // For LuckPerms on Fabric, add me.lucko:fabric-permissions-api and use:
-        //   return Permissions.check(source, "server_eye.mods", source.getEntity() == null ? 2 : 4);
-        return source.hasPermission(source.getEntity() == null ? 2 : 4);
+        return Permissions.check(source, "server_eye.mods", source.getEntity() == null ? 2 : 4);
+        // return source.hasPermission(source.getEntity() == null ? 2 : 4);
     }
 }
