@@ -12,7 +12,7 @@ credits="${credits}"
 authors = "${mod_author}"
 description = '''${description}'''
 
-#updateJSONURL="https://change.me.example.invalid/updates.json" #optional (see https://docs.neoforged.net/docs/misc/updatechecker/) # Might use this later ¯\_(ツ)_/¯
+#updateJSONURL="https://change.me.example.invalid/updates.json" #optional (see https://docs.neoforged.net/docs/misc/updatechecker/)
 
 [[dependencies.${mod_id}]]
 modId = "neoforge"
