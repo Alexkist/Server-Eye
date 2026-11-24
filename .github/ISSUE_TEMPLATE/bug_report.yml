@@ -44,6 +44,26 @@ body:
       required: true
 
   - type: dropdown
+    id: minecraft-version
+    attributes:
+      label: Minecraft Version
+      options:
+        - 1.21.1
+        - 1.20.1 (LTS)
+      default: 0
+    validations:
+      required: true
+
+  - type: input
+    id: server-eye-version
+    attributes:
+      label: Server Eye Version
+      description: "Please provide the version of Server Eye that you are using"
+      placeholder: "v2.0"
+    validations:
+      required: true
+
+  - type: dropdown
     id: environment
     attributes:
       label: Environment
@@ -52,22 +72,6 @@ body:
         - Client
         - Server
         - Uncertain
-    validations:
-      required: true
-
-  - type: dropdown
-    id: server-eye-version
-    attributes:
-      label: Server Eye Version
-      options:
-        - v2.0
-        - v1.5
-        - v1.4
-        - v1.3
-        - v1.2
-        - v1.1
-        - v1.0
-      default: 0
     validations:
       required: true
 
