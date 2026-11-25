@@ -45,7 +45,7 @@ public class ClientModListHandler {
                 .anyMatch(entry -> entry.equalsIgnoreCase(username));
 
         if (isWhitelisted) {
-            System.out.println("[Server-Eye] " + username + " is whitelisted.");
+            System.out.println("[Server-Eye] " + username + " is whitelisted, and has skipped mod checks");
             return;
         }
 
@@ -64,14 +64,15 @@ public class ClientModListHandler {
         if (!forbiddenMods.isEmpty()) {
             // Log to Console
             System.out.println("[Server-Eye] " + username
-                + " has forbidden mod(s): " + String.join(", ", forbiddenMods));
+                + " has blacklisted mod(s): " + String.join(", ", forbiddenMods));
 
             // Check if the Server is in log only mode
             if (!logOnly) {
                 player.connection.disconnect(
                     Component.literal("""
                         Server Eye
-                        You are using disallowed modification(s):
+                        One or more of your installed mods are are not allowed on the Server.
+                        Please remove all mods listed below to join:
                         %s""".formatted(String.join("\n", forbiddenMods))
                     )
                 );
