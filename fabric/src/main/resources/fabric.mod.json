@@ -1,0 +1,29 @@
+{
+    "schemaVersion": 1,
+    "id": "${mod_id}",
+    "version": "${version}",
+    "name": "${mod_name}",
+    "description": "${description}",
+    "authors": ["Alexkist", "Febreeze"],
+    "contributors": ["Zaid"],
+    "contact": {
+        "sources": "https://github.com/Alexkist/Server-Eye",
+        "issues": "https://github.com/Alexkist/Server-Eye/issues"
+    },
+    "license": "${license}",
+    "icon": "${mod_id}.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": ["com.github.alexkist.server_eye.ServerEyeFabric"],
+        "client": ["com.github.alexkist.server_eye.client.ServerEyeFabricClient"]
+    },
+    "depends": {
+        "fabricloader": ">=${fabric_loader_version}",
+        "fabric-api": "*",
+        "minecraft": "${minecraft_version}",
+        "java": ">=${java_version}"
+    },
+    "suggests": {
+        "luckperms": "*"
+    }
+}
