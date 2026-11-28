@@ -1,9 +1,9 @@
 package com.github.alexkist.server_eye.platform.services;
 
-import net.minecraft.commands.CommandSourceStack;
-
 import java.nio.file.Path;
 import java.util.List;
+
+import net.minecraft.commands.CommandSourceStack;
 
 public interface IPlatformHelper {
 
@@ -17,5 +17,7 @@ public interface IPlatformHelper {
 
     List<String> getLoadedModIds();
 
-    boolean canUseServerEyeCommand(CommandSourceStack source);
+    boolean canUseViewMods(CommandSourceStack source);
+
+    boolean canUseReload(CommandSourceStack source);
 }

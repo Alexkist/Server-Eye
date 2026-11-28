@@ -16,9 +16,14 @@ import java.util.List;
 
 public class NeoForgePlatformHelper implements IPlatformHelper {
 
-    /** server_eye.mods - LuckPerms picks this up through NeoForge's PermissionAPI. */
     public static final PermissionNode<Boolean> MODS = new PermissionNode<>(
             Constants.id("mods"),
+            PermissionTypes.BOOLEAN,
+            (player, uuid, context) -> player != null && player.hasPermissions(4)
+    );
+
+    public static final PermissionNode<Boolean> RELOAD = new PermissionNode<>(
+            Constants.id("reload"),
             PermissionTypes.BOOLEAN,
             (player, uuid, context) -> player != null && player.hasPermissions(4)
     );
@@ -49,10 +54,18 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public boolean canUseServerEyeCommand(CommandSourceStack source) {
+    public boolean canUseViewMods(CommandSourceStack source) {
         if (source.getEntity() instanceof ServerPlayer player) {
             return PermissionAPI.getPermission(player, MODS);
         }
-        return source.hasPermission(2); // console / command blocks
+        return source.hasPermission(2); // Console or command blocks
+    }
+
+    @Override
+    public boolean canUseReload(CommandSourceStack source) {
+        if (source.getEntity() instanceof ServerPlayer player) {
+            return PermissionAPI.getPermission(player, RELOAD);
+        }
+        return source.hasPermission(2); // Console or command blocks
     }
 }

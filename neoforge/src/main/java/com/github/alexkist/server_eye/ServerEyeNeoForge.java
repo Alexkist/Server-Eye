@@ -26,7 +26,7 @@ public class ServerEyeNeoForge {
         modEventBus.addListener(ServerEyeNeoForge::registerPayloads);
 
         // Game bus: forward to common code
-        NeoForge.EVENT_BUS.addListener((PermissionGatherEvent.Nodes e) -> e.addNodes(NeoForgePlatformHelper.MODS));
+        NeoForge.EVENT_BUS.addListener((PermissionGatherEvent.Nodes e) -> e.addNodes(NeoForgePlatformHelper.MODS, NeoForgePlatformHelper.RELOAD));
         NeoForge.EVENT_BUS.addListener((RegisterCommandsEvent e) -> ServerEyeCommands.register(e.getDispatcher()));
         NeoForge.EVENT_BUS.addListener((ServerTickEvent.Post e) -> ModListTimeoutHandler.tick(e.getServer()));
         NeoForge.EVENT_BUS.addListener((PlayerEvent.PlayerLoggedInEvent e) -> {

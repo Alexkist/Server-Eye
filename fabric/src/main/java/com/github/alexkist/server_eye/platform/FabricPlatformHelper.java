@@ -39,9 +39,12 @@ public class FabricPlatformHelper implements IPlatformHelper {
     }
 
     @Override
-    public boolean canUseServerEyeCommand(CommandSourceStack source) {
-        // For LuckPerms on Fabric
+    public boolean canUseViewMods(CommandSourceStack source) {
         return Permissions.check(source, "server_eye.mods", source.getEntity() == null ? 2 : 4);
-        // return source.hasPermission(source.getEntity() == null ? 2 : 4);
+    }
+
+    @Override
+    public boolean canUseReload(CommandSourceStack source) {
+        return Permissions.check(source, "server_eye.reload", source.getEntity() == null ? 2 : 4);
     }
 }

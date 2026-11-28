@@ -18,11 +18,13 @@ public final class ServerEyeCommands {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(
                 Commands.literal("server_eye")
-                        .requires(Services.PLATFORM::canUseServerEyeCommand)
+                        .requires(source -> Services.PLATFORM.canUseViewMods(source) || Services.PLATFORM.canUseReload(source))
                         .then(Commands.literal("viewMods")
+                                .requires(Services.PLATFORM::canUseViewMods)
                                 .then(Commands.argument("player", EntityArgument.player())
                                         .executes(ServerEyeCommands::listMods)))
                         .then(Commands.literal("reload")
+                                .requires(Services.PLATFORM::canUseReload)
                                 .executes(ServerEyeCommands::reload))
         );
     }
